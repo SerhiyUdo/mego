@@ -66,9 +66,6 @@ private static void saveProperties() {
     testProperties.load(testPropertiesFile.newDataInputStream())
     if (System.getProperty("serverUrl") != null) {
         testProperties.setProperty("domain", System.getProperty("serverUrl"))
-        testProperties.setProperty("taxCalculationServiceDomain", System.getProperty("taxCalculationServiceDomain"))
-        testProperties.setProperty("orderArchiveUrl", System.getProperty("orderArchiveUrl"))
-        testProperties.setProperty("selenoidUrl", System.getProperty("selenoidUrl "))
         testProperties.store(testPropertiesFile.newWriter(), null)
     }
 }
