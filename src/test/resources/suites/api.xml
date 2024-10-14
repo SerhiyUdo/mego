@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="API Suite">
+    <test name="Time tests">
+        <classes>
+            <class name="api.TimeTest"/>
+        </classes>
+    </test>
+    <test name="Chanel tests">
+        <classes>
+            <class name="api.ChanelTest"/>
+        </classes>
+    </test>
+</suite>
