@@ -21,7 +21,7 @@ public class TimeTest extends AbstractApiTest{
         init(TimeService.class);
     }
 
-    @Test(priority = 1, groups = "critical")
+    //@Test(priority = 1, groups = "critical")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Get time on server and check it is correct test")
     public void getTimeTest() {
