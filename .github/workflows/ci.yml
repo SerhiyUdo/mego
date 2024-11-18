@@ -29,7 +29,7 @@ jobs:
           distribution: 'temurin'  # Use Temurin instead of Adoptium
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v3  # Updated to v3
+        uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
@@ -45,7 +45,7 @@ jobs:
       - name: Run TestNG tests with severity filter
         run: |
           if [[ "${{ github.event.inputs.severity }}" == "critical" ]]; then
-            ./gradlew test -Dtestng.groups=critical
+            ./gradlew test -Dtestng.groups=critical  # Run only critical tests
           elif [[ "${{ github.event.inputs.severity }}" == "high" ]]; then
             ./gradlew test -Dtestng.groups=high
           elif [[ "${{ github.event.inputs.severity }}" == "medium" ]]; then
@@ -58,6 +58,12 @@ jobs:
 
       - name: Generate Allure report
         run: ./gradlew allureReport
+
+      - name: Upload TestNG report as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: build/reports/tests/test/index.html  # Path to the TestNG report
 
       - name: Upload Allure report as an artifact
         uses: actions/upload-artifact@v3
