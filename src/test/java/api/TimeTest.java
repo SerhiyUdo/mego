@@ -14,7 +14,7 @@ import static com.epam.http.requests.ServiceInit.init;
 import static utils.AllureAssert.*;
 import static utils.ResponseUtil.getLongFromResponse;
 
-public class TimeTest {
+public class TimeTest extends AbstractApiTest{
 
     @BeforeClass
     public void preconditions() {

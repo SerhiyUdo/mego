@@ -17,7 +17,7 @@ import static utils.AllureAssert.assertEquals;
 import static utils.AllureAssert.assertResponseStatus;
 import static utils.ResponseUtil.*;
 
-public class ChanelTest {
+public class ChanelTest extends AbstractApiTest{
 
     public static boolean isCurrentTimestampInRange(long currentTimestamp, Map<Long, Long> timestampRanges) {
         for (Map.Entry<Long, Long> entry : timestampRanges.entrySet()) {
