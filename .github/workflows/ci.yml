@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'temurin'  # Use Temurin instead of Adoptium
+          distribution: 'temurin'
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
@@ -59,14 +59,14 @@ jobs:
       - name: Generate Allure report
         run: ./gradlew allureReport
 
-      - name: Upload TestNG report as an artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-report
-          path: build/reports/tests/test/index.html  # Path to the TestNG report
-
       - name: Upload Allure report as an artifact
         uses: actions/upload-artifact@v3
         with:
           name: allure-report
-          path: build/allure-report
+          path: build/reports/allure-report/allureReport  # Path to the generated Allure report
+
+      - name: Upload TestNG report as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: build/reports/tests/test/index.html
