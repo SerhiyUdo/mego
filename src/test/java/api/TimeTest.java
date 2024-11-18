@@ -3,6 +3,8 @@ package api;
 import api.services.TimeService;
 import com.epam.http.response.RestResponse;
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -19,7 +21,8 @@ public class TimeTest {
         init(TimeService.class);
     }
 
-    @Test
+    @Test(priority = 1, groups = "critical")
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Get time on server and check it is correct test")
     public void getTimeTest() {
         RestResponse response = TimeService.getTime.call();

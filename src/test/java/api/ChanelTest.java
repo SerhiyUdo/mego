@@ -3,6 +3,8 @@ package api;
 import api.services.ChanelService;
 import com.epam.http.response.RestResponse;
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -34,7 +36,8 @@ public class ChanelTest {
         init(ChanelService.class);
     }
 
-    @Test(dataProvider = "channels")
+    @Test(dataProvider = "channels", priority = 3, groups = "medium")
+    @Severity(SeverityLevel.NORMAL)
     @Description("Get channel and check program is correct test")
     public void getChanelProgramTest(Integer videoId) {
         long currentTimestamp = Instant.now().getEpochSecond();
