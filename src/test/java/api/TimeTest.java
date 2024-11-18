@@ -12,7 +12,7 @@ import static com.epam.http.requests.ServiceInit.init;
 import static utils.AllureAssert.*;
 import static utils.ResponseUtil.getLongFromResponse;
 
-public class TimeTest extends AbstractApiTest {
+public class TimeTest {
 
     @BeforeClass
     public void preconditions() {
