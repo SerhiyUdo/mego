@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'io.qameta.allure' version '2.8.1'
+    id 'io.qameta.allure' version '2.12.0'
 }
 
 group 'com.demo'
@@ -22,37 +22,12 @@ dependencies {
     implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.9.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.2.2'
-
-    implementation 'com.opencsv:opencsv:5.9'
-    implementation('io.qameta.allure:allure-model') {
-        version {
-            strictly '2.27.0'
-        }
-    }
-    implementation('io.qameta.allure:allure-java-commons') {
-        version {
-            strictly '2.27.0'
-        }
-    }
 }
 
 test {
-    launchProperties()
-    systemProperties = System.properties
-    saveProperties()
     useTestNG() {
         options {
-            switch(System.getProperty("testSuite").toLowerCase()) {
-                case "ui":
-                    println("start ui tests here: ---------->")
-                    suites(file("src/test/resources/suites/ui.xml"))
-                    break
-                case "api":
-                default:
-                    println("start regression API tests here: ---------->")
-                    suites(file("src/test/resources/suites/api.xml"))
-                    break
-            }
+            suites file("src/test/resources/suites/api.xml")
         }
         testLogging {
             events "PASSED", "FAILED", "SKIPPED"
@@ -60,31 +35,9 @@ test {
     }
 }
 
-private static void saveProperties() {
-    Properties testProperties = new Properties()
-    File testPropertiesFile = new File("src/main/resources/test.properties")
-    testProperties.load(testPropertiesFile.newDataInputStream())
-    if (System.getProperty("serverUrl") != null) {
-        testProperties.setProperty("domain", System.getProperty("serverUrl"))
-        testProperties.store(testPropertiesFile.newWriter(), null)
-    }
-}
-
-private static void launchProperties() {
-    Properties launchProperties = new Properties()
-    File lunchPropertiesFile = new File("src/main/resources/launch.properties")
-    launchProperties.load(lunchPropertiesFile.newDataInputStream())
-    launchProperties.stringPropertyNames().forEach({ key ->
-        if (System.getProperty(key) == null) {
-            println(key + "=" + launchProperties.getProperty(key))
-            System.setProperty(key, launchProperties.getProperty(key))
-        }
-    })
-}
-
-
 allure {
-    version = '2.13.8'
+    version = '2.13.8'  // Ensure you set the correct Allure version
+    autoconfigure = true  // Optional, automatically configures the Allure plugin
 }
 
 clean {
@@ -95,6 +48,9 @@ clean {
     delete "src/test/resources/downloads"
 }
 
-configurations.configureEach {
-    exclude module: 'log4j-slf4j-impl'
+tasks.named('allureReport') {
+    dependsOn test  // Ensure the allureReport task runs after tests
+    doLast {
+        println "Allure Report Generated!"
+    }
 }
